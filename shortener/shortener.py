@@ -8,11 +8,11 @@ import random
 
 
 def get_random(tries=0):
-    length = getattr(settings, 'SHORTENER_LENGTH', 5)
+    length = getattr(settings, 'SHORTENER_LENGTH', 4)
     length += tries
 
     # Removed l, I, 1
-    dictionary = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz234567890"
+    dictionary = "abcdefghijkmnopqrstuvwxyz234567890"
     return ''.join(random.choice(dictionary) for _ in range(length))
 
 
@@ -71,6 +71,7 @@ def create(user, link):
 
 def expand(link):
     try:
+        link = link.lower()
         url = UrlMap.objects.get(short_url__exact=link)
     except UrlMap.DoesNotExist:
         raise KeyError("invalid shortlink")
@@ -89,4 +90,3 @@ def expand(link):
     url.usage_count += 1
     url.save()
     return url.full_url
-
