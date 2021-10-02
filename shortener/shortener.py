@@ -11,8 +11,7 @@ def get_random(tries=0):
     length = getattr(settings, 'SHORTENER_LENGTH', 4)
     length += tries
 
-    # Removed l, I, 1
-    dictionary = "abcdefghijkmnopqrstuvwxyz234567890"
+    dictionary = "acdefghmnrstwxz1234567890"
     return ''.join(random.choice(dictionary) for _ in range(length))
 
 
